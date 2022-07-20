@@ -10,7 +10,9 @@ Add Aggregation Features as train_data
 Scale data
 
 Result :
+
 ![image](https://user-images.githubusercontent.com/12759769/179941599-4c267bac-0148-4342-b009-549c5e8fdfad.png)
+
 ![image](https://user-images.githubusercontent.com/12759769/179941754-5fe37b1f-addc-4662-be16-3d7bb0732614.png)
 
 
