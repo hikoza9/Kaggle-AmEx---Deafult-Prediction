@@ -5,7 +5,7 @@ You can get the Dataset from Here : https://www.kaggle.com/competitions/amex-def
 
 Using LightGBM as Model
 Tuning LightGBM Parameter using Optuna
-Encode Catergorical Feature
+Encode Categorical Feature
 Add Aggregation Features as train_data
 Scale data
 
