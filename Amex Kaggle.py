@@ -64,10 +64,10 @@ train_labels = train_labels.set_index("customer_ID")
 
 print("Split Data Train")
 x_train, x_test, y_train, y_test = train_test_split(train_data, train_labels, test_size = 0.3, random_state = 4222)
-del train_data, x_test, y_test
+del train_data
 
-# y_pred_amex = pd.DataFrame(y_test.copy(deep=True))
-# y_pred_amex = y_pred_amex.rename(columns={'target':'prediction'})
+y_pred_amex = pd.DataFrame(y_test.copy(deep=True))
+y_pred_amex = y_pred_amex.rename(columns={'target':'prediction'})
 
 
 def objective(trial):
@@ -146,8 +146,8 @@ params0 = {
 
 
 #LOAD TEST DATA
-test_data = pd.read_feather(path + "/dataset/test_data_scaled.ftr")
-test_data = test_data.set_index("customer_ID")
+# test_data = pd.read_feather(path + "/dataset/test_data_scaled.ftr")
+# test_data = test_data.set_index("customer_ID")
 
 print("Model Trial")
 #MODEL TRIAL
@@ -158,35 +158,35 @@ model.fit(x_train, y_train.values.ravel())
 del x_train, y_train
 
 
-# print("Amex Metric")
-# start = datetime.now()
-# # AMEX METRIC
-# y_pred_amex["prediction"] = model.predict_proba(x_test)[:,1]
-# print(y_pred_amex)
-# # print("Parameter LGBM : ", params2)
-# print("Amex Metric : ", amex_metric(y_test, y_pred_amex))
-# end = datetime.now()
-# print(f"Execution time took {end-start} seconds.")
-
-y_pred_amex = pd.DataFrame(sample_submission.copy(deep=True))
-y_pred_amex["prediction"] = model.predict_proba(test_data)[:,1]
-del test_data
-# print(y_pred_amex)
+print("Amex Metric")
+start = datetime.now()
+# AMEX METRIC
+y_pred_amex["prediction"] = model.predict_proba(x_test)[:,1]
+print(y_pred_amex)
 # print("Parameter LGBM : ", params2)
-# print("Amex Metric : ", amex_metric(y_test, y_pred_amex))
-y_pred_amex.to_csv(path + "/dataset/sample submission competition.csv")
+print("Amex Metric : ", amex_metric(y_test, y_pred_amex))
+end = datetime.now()
+print(f"Execution time took {end-start} seconds.")
+
+# y_pred_amex = pd.DataFrame(sample_submission.copy(deep=True))
+# y_pred_amex["prediction"] = model.predict_proba(test_data)[:,1]
+# del test_data
+# # print(y_pred_amex)
+# # print("Parameter LGBM : ", params2)
+# # print("Amex Metric : ", amex_metric(y_test, y_pred_amex))
+# y_pred_amex.to_csv(path + "/dataset/sample submission competition.csv")
 
 # #PREDICT TEST DATA
 
-# y_pred = model.predict(x_test)
-# model_conf_matrix = confusion_matrix(y_test, y_pred)
-# model_acc_score = accuracy_score(y_test, y_pred)
-# print("confussion matrix")
-# print(model_conf_matrix)
-# print("-------------------------------------------")
-# print("Accuracy of Logistic Regression:",model_acc_score*100,'\n')
-# print("-------------------------------------------")
-# print(classification_report(y_test,y_pred))
+y_pred = model.predict(x_test)
+model_conf_matrix = confusion_matrix(y_test, y_pred)
+model_acc_score = accuracy_score(y_test, y_pred)
+print("confussion matrix")
+print(model_conf_matrix)
+print("-------------------------------------------")
+print("Accuracy of Logistic Regression:",model_acc_score*100,'\n')
+print("-------------------------------------------")
+print(classification_report(y_test,y_pred))
 
 # #PREDICT TRAIN DATA
 # y_pred = model.predict(x_train)
